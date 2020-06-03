@@ -1,9 +1,9 @@
-import React from 'react';
-import CompletedTodos from './CompletedTodo';
+import React from "react";
+import CompletedTodos from "./CompletedTodo";
 
-const CompletedTodosContainer = (props) =>
-{
-    return(<div>
+const CompletedTodosContainer = (props) => {
+  return (
+    <div>
       {props.CompletedTodos.map((todoItem) => {
         return (
           <CompletedTodos
@@ -15,8 +15,7 @@ const CompletedTodosContainer = (props) =>
         );
       })}
     </div>
-    )
-}
-
+  );
+};
 
 export default CompletedTodosContainer;

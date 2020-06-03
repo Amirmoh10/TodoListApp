@@ -38,6 +38,9 @@ class App extends React.Component {
       PendingTodos: this.state.PendingTodos.filter((todo) => {
         return todo.id !== id;
       }),
+      CompletedTodos: this.state.CompletedTodos.filter((todo) => {
+        return todo.id !== id;
+      }),
     });
   };
 
