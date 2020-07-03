@@ -1,92 +1,78 @@
-import React from "react";
-import PendingTodosContainer from "./PendingTodos/PendingTodosContainer";
-import CompletedTodosContainer from "./CompletedTodos/CompletedTodosContainer";
-import { v4 as uuidv4 } from "uuid";
-import "../App.css";
+import React, { useState } from 'react';
+import '../App.css';
+const listTypeToTitle = {
+	completed: 'Completed',
+	pending: 'Pending'
+};
+function App() {
+	const [ currentTodo, setCurrentTodo ] = useState('');
+	const [ pendingTodos, setPendingTodos ] = useState([]);
+	const [ completedTodos, setCompletedTodos ] = useState([]);
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+	function onKeyDown(e) {
+		if (e.key === 'Enter' && currentTodo.trim()) {
+			setPendingTodos([ ...pendingTodos, currentTodo ]);
+			setCurrentTodo('');
+		}
+	}
 
-    this.state = {
-      PendingTodos: [
-        {
-          todoName: "buy milk",
-          checked: false,
-          id: uuidv4(),
-        },
-      ],
-      CompletedTodos: [],
-    };
-  }
-  todoChange = (id) => {
-    this.setState({
-      PendingTodos: this.state.PendingTodos.filter((todo) => {
-        return todo.id !== id;
-      }),
+	function deleteTodo(todoIndex, targetList) {
+		const targetTodoList = targetList === 'pending' ? pendingTodos : completedTodos;
+		const setter = targetList === 'pending' ? setPendingTodos : setCompletedTodos;
 
-      CompletedTodos: this.state.CompletedTodos.concat(
-        this.state.PendingTodos.filter((todo) => {
-          return todo.id === id;
-        })
-      ),
-    });
-  };
+		const filteredTodos = targetTodoList.filter((_, index) => todoIndex !== index);
 
-  removeTodoItem = (id) => {
-    this.setState({
-      PendingTodos: this.state.PendingTodos.filter((todo) => {
-        return todo.id !== id;
-      }),
-      CompletedTodos: this.state.CompletedTodos.filter((todo) => {
-        return todo.id !== id;
-      }),
-    });
-  };
+		setter(filteredTodos);
+	}
 
-  addTodoItem = (event, value) => {
-    if (event.key === "Enter") {
-      console.log(this.state.CompletedTodos);
-      this.setState({
-        PendingTodos: this.state.PendingTodos.concat({
-          todoName: value,
-          checked: false,
-          id: uuidv4(),
-        }),
-      });
-    }
-  };
+	function completeTodo(todoIndex) {
+		const targetTodo = pendingTodos[todoIndex];
 
-  render() {
-    return (
-      <div className="App">
-        <h1>todolist</h1>
-        <input
-          type="text"
-          onKeyDown={(event, value) =>
-            this.addTodoItem(event, event.target.value)
-          }
-        />
+		setCompletedTodos([ ...completedTodos, targetTodo ]);
+		deleteTodo(todoIndex, 'pending');
+	}
 
-        <h2>Pending</h2>
-        <div style={{ borderStyle: "groove" }}>
-          <PendingTodosContainer
-            PendingTodos={this.state.PendingTodos}
-            todoChange={this.todoChange}
-            removeTodoItem={this.removeTodoItem}
-          />
-        </div>
-        <h2>Completed</h2>
-        <div style={{ borderStyle: "groove" }}>
-          <CompletedTodosContainer
-            CompletedTodos={this.state.CompletedTodos}
-            todoChange={this.todoChange}
-            removeTodoItem={this.removeTodoItem}
-          />
-        </div>
-      </div>
-    );
-  }
+	return (
+		<div className="app">
+			<div className="title">
+				<h1>todolist</h1>
+			</div>
+			<input
+				type="text"
+				placeholder="Add todo..."
+				value={currentTodo}
+				onChange={(e) => setCurrentTodo(e.target.value)}
+				onKeyDown={onKeyDown}
+			/>
+			<TodoList listType="pending" completeTodo={completeTodo} deleteTodo={deleteTodo} todos={pendingTodos} />
+			<TodoList listType="completed" deleteTodo={deleteTodo} todos={completedTodos} />
+		</div>
+	);
+}
+
+function TodoList({ listType, completeTodo, deleteTodo, todos }) {
+	return (
+		<div className="todosListContainer">
+			<div className={todos.length > 0 ? 'normalListTitle' : 'dimmedListTitle'}>
+				<h2>{listTypeToTitle[listType]}</h2>
+			</div>
+			{todos.map((todo, index) => (
+				<div className="todoItem" key={index}>
+					<span>{todo}</span>
+					<div className="buttons">
+						{listType === 'completed' ? null : (
+							<span className="complete" onClick={() => completeTodo(index)}>
+								<img src="https://img.icons8.com/flat_round/25/000000/checkmark.png" />
+							</span>
+						)}
+						<span onClick={() => deleteTodo(index, listType)}>
+							<img src="https://img.icons8.com/flat_round/25/000000/delete-sign.png" />
+						</span>
+					</div>
+				</div>
+			))}
+		</div>
+	);
 }
 
 export default App;
