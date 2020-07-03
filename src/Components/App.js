@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+
 const listTypeToTitle = {
 	completed: 'Completed',
 	pending: 'Pending'
@@ -35,7 +36,7 @@ function App() {
 	return (
 		<div className="app">
 			<div className="title">
-				<h1>todolist</h1>
+				<h1>Todo</h1>
 			</div>
 			<input
 				type="text"
@@ -54,7 +55,7 @@ function TodoList({ listType, completeTodo, deleteTodo, todos }) {
 	return (
 		<div className="todosListContainer">
 			<div className={todos.length > 0 ? 'normalListTitle' : 'dimmedListTitle'}>
-				<h2>{listTypeToTitle[listType]}</h2>
+				<h2>{listType === 'pending' ? listTypeToTitle.pending : listTypeToTitle.completed}</h2>
 			</div>
 			{todos.map((todo, index) => (
 				<div className="todoItem" key={index}>
