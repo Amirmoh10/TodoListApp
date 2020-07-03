@@ -63,11 +63,11 @@ function TodoList({ listType, completeTodo, deleteTodo, todos }) {
 					<div className="buttons">
 						{listType === 'completed' ? null : (
 							<span className="complete" onClick={() => completeTodo(index)}>
-								<img src="https://img.icons8.com/flat_round/25/000000/checkmark.png" />
+								<img src="https://img.icons8.com/flat_round/25/000000/checkmark.png" alt="icon" />
 							</span>
 						)}
 						<span onClick={() => deleteTodo(index, listType)}>
-							<img src="https://img.icons8.com/flat_round/25/000000/delete-sign.png" />
+							<img src="https://img.icons8.com/flat_round/25/000000/delete-sign.png" alt="icon" />
 						</span>
 					</div>
 				</div>
