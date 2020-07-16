@@ -1,79 +1,147 @@
-import React, { useState } from 'react';
-import '../App.css';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import "../App.css";
 
-const listTypeToTitle = {
-	completed: 'Completed',
-	pending: 'Pending'
+const sectionTypeTitle = {
+  completed: "Completed",
+  pending: "Pending",
 };
+
 function App() {
-	const [ currentTodo, setCurrentTodo ] = useState('');
-	const [ pendingTodos, setPendingTodos ] = useState([]);
-	const [ completedTodos, setCompletedTodos ] = useState([]);
+  const [typedInTodo, setCurrentTodo] = useState("");
+  const [pendingTasks, setpendingTasks] = useState([]);
+  const [completedTasks, setcompletedTasks] = useState([]);
 
-	function onKeyDown(e) {
-		if (e.key === 'Enter' && currentTodo.trim()) {
-			setPendingTodos([ ...pendingTodos, currentTodo ]);
-			setCurrentTodo('');
-		}
-	}
+  function completeTodo(taskIndex) {
+    const pendingTask = pendingTasks[taskIndex];
+    setcompletedTasks([...completedTasks, pendingTask]);
+    deleteTodo(taskIndex, "pending");
+  }
 
-	function deleteTodo(todoIndex, targetList) {
-		const targetTodoList = targetList === 'pending' ? pendingTodos : completedTodos;
-		const setter = targetList === 'pending' ? setPendingTodos : setCompletedTodos;
+  function deleteTodo(taskIndex, taskSection) {
+    const taskList = taskSection === "pending" ? pendingTasks : completedTasks;
+    const setter =
+      taskList === pendingTasks ? setpendingTasks : setcompletedTasks;
 
-		const filteredTodos = targetTodoList.filter((_, index) => todoIndex !== index);
+    const filteredTasks = taskList.filter((_, index) => taskIndex !== index);
 
-		setter(filteredTodos);
-	}
+    setter(filteredTasks);
+  }
 
-	function completeTodo(todoIndex) {
-		const targetTodo = pendingTodos[todoIndex];
+  function onKeyDown(e) {
+    if (e.key === "Enter" && typedInTodo.trim()) {
+      setpendingTasks([...pendingTasks, typedInTodo]);
+      setCurrentTodo("");
+    }
+  }
 
-		setCompletedTodos([ ...completedTodos, targetTodo ]);
-		deleteTodo(todoIndex, 'pending');
-	}
+  function TodoList({ sectionTitle, completeTodo, deletedTodo, sectionTasks }) {
+    return (
+      <div className="sectionsContainer">
+        <div
+          className={
+            sectionTasks.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
+          }
+        >
+          <h2>
+            {sectionTitle === "pending"
+              ? sectionTypeTitle.pending
+              : sectionTypeTitle.completed}
+          </h2>
+        </div>
+        {sectionTasks.map((todo, index) => (
+          <div className="todoItem" key={index}>
+            <span> {todo} </span>
+            <div className="buttons">
+              {sectionTitle === "completed" ? null : (
+                <span
+                  className="checkButton"
+                  onClick={() => completeTodo(index)}
+                >
+                  <img
+                    src="https://img.icons8.com/flat_round/25/000000/checkmark.png"
+                    alt="icon"
+                  />
+                </span>
+              )}
+              <span onClick={() => deletedTodo(index, sectionTitle)}>
+                <img
+                  src="https://img.icons8.com/flat_round/25/000000/delete-sign.png"
+                  alt="icon"
+                />
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
-	return (
-		<div className="app">
-			<div className="title">
-				<h1>Todo</h1>
-			</div>
-			<input
-				type="text"
-				placeholder="Add todo..."
-				value={currentTodo}
-				onChange={(e) => setCurrentTodo(e.target.value)}
-				onKeyDown={onKeyDown}
-			/>
-			<TodoList listType="pending" completeTodo={completeTodo} deleteTodo={deleteTodo} todos={pendingTodos} />
-			<TodoList listType="completed" deleteTodo={deleteTodo} todos={completedTodos} />
-		</div>
-	);
+  TodoList.propTypes = {
+    sectionTitle: PropTypes.oneOf(["pending", "completed"]).isRequired,
+    completeTodo: PropTypes.func,
+    deleteTodo: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.string),
+  };
+
+  return (
+    <div className="app">
+      <div className="title">
+        <h1> Todo </h1>
+      </div>
+      <input
+        type="text"
+        placeholder="Add todo..."
+        value={typedInTodo}
+        onChange={(event) => setCurrentTodo(event.target.value)}
+        onKeyDown={onKeyDown}
+      />
+
+      <div className="pendingSection">
+        <TodoList
+          sectionTitle="pending"
+          completeTodo={completeTodo}
+          deletedTodo={deleteTodo}
+          sectionTasks={pendingTasks}
+        />
+      </div>
+      <div className="completedSection">
+        <TodoList
+          sectionTitle="completed"
+          sectionTasks={completedTasks}
+          deletedTodo={deleteTodo}
+        />
+      </div>
+    </div>
+  );
 }
+//
 
-function TodoList({ listType, completeTodo, deleteTodo, todos }) {
-	return (
-		<div className="todosListContainer">
-			<div className={todos.length > 0 ? 'normalListTitle' : 'dimmedListTitle'}>
-				<h2>{listType === 'pending' ? listTypeToTitle.pending : listTypeToTitle.completed}</h2>
-			</div>
-			{todos.map((todo, index) => (
-				<div className="todoItem" key={index}>
-					<span>{todo}</span>
-					<div className="buttons">
-						{listType === 'completed' ? null : (
-							<span className="complete" onClick={() => completeTodo(index)}>
-								<img src="https://img.icons8.com/flat_round/25/000000/checkmark.png" alt="icon" />
-							</span>
-						)}
-						<span onClick={() => deleteTodo(index, listType)}>
-							<img src="https://img.icons8.com/flat_round/25/000000/delete-sign.png" alt="icon" />
-						</span>
-					</div>
-				</div>
-			))}
-		</div>
-	);
-}
+//
 
 export default App;
+// className={typedTodo.length > 0 ? "boldSectionTitle" : "dimmedSectionTitle"
+// {sectionTasks.map((todo, index) => (
+//   <div className="todoItem" key={index}>
+//     <span> {todo} </span>{" "}
+//     <div className="buttons">
+//       {sectionTitle === "Completed" ? null : (
+//         <span
+//           className="pending"
+//           onClick={() => completeTodo(index)}
+//         >
+//           <img
+//             src="https://img.icons8.com/flat_round/25/000000/checkmark.png"
+//             alt="icon"
+//           />
+//         </span>
+//       )}{" "}
+//       <span onClick={() => deletedTodo(index, sectionTitle)}>
+//         <img
+//           src="https://img.icons8.com/flat_round/25/000000/delete-sign.png"
+//           alt="icon"
+//         />
+//       </span>
+//     </div>
+//   </div>
+// ))}
