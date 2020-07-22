@@ -48,7 +48,7 @@ function App() {
         <TodoList
           sectionTitle="pending"
           completeTodo={completeTodo}
-          deletedTodo={deleteTodo}
+          deleteTodo={deleteTodo}
           sectionList={pendingTodos}
         />
       </div>
@@ -56,14 +56,14 @@ function App() {
         <TodoList
           sectionTitle="completed"
           sectionList={completedTodos}
-          deletedTodo={deleteTodo}
+          deleteTodo={deleteTodo}
         />
       </div>
     </div>
   );
 }
 
-function TodoList({ sectionTitle, completeTodo, deletedTodo, sectionList }) {
+function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
   return (
     <div className="sectionsContainer">
       <div
@@ -94,7 +94,7 @@ function TodoList({ sectionTitle, completeTodo, deletedTodo, sectionList }) {
             <span
               role="img"
               aria-label="Delete"
-              onClick={() => deletedTodo(index, sectionTitle)}
+              onClick={() => deleteTodo(index, sectionTitle)}
             >
               ❌ />
             </span>
