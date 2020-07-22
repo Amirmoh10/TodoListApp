@@ -53,7 +53,7 @@ function App() {
             sectionList={pendingTodos}
           />
         </div>
-        <div className="CompleteSection">
+        <div className="completeSection">
           <TodoList
             sectionTitle="completed"
             sectionList={completedTodos}
