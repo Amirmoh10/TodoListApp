@@ -1,4 +1,4 @@
-## App live Demo
+## App Live Demo
 
 Click on this [link](https://romantic-galileo-162862.netlify.app) and test it. 
 
