@@ -51,8 +51,6 @@ function App() {
           deleteTodo={deleteTodo}
           sectionList={pendingTodos}
         />
-      </div>
-      <div className="completedSection">
         <TodoList
           sectionTitle="completed"
           sectionList={completedTodos}
@@ -65,42 +63,48 @@ function App() {
 
 function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
   return (
-    <div className="sectionsContainer">
-      <div
+    <div className="sectionContainer">
+      <h2
         className={
           sectionList.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
         }
       >
-        <h2>
-          {sectionTitle === "pending"
-            ? sectionTypeTitle.pending
-            : sectionTypeTitle.completed}
-        </h2>
-      </div>
-      {sectionList.map((todo, index) => (
-        <div className="todoItem" key={index}>
-          <span> {todo} </span>
-          <div className="buttons">
-            {sectionTitle === "completed" ? null : (
-              <span
-                role="img"
-                aria-label="Complete"
-                className="checkButton"
-                onClick={() => completeTodo(index)}
-              >
-                ✅
-              </span>
+        {sectionTitle === "pending"
+          ? sectionTypeTitle.pending
+          : sectionTypeTitle.completed}
+      </h2>
+      <div className="todoContainer">
+        {sectionList.map((todo, index) => (
+          <div className="todoItem" key={index}>
+            <span> {todo} </span>
+            {sectionTitle === "pending" ? (
+              <div className="pendingSectionButtons">
+                <span
+                  className="completeButton"
+                  onClick={() => completeTodo(index)}
+                >
+                  <i class="fas fa-check"></i>
+                </span>
+                <span
+                  className="deleteButton"
+                  onClick={() => deleteTodo(index, sectionTitle)}
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </div>
+            ) : (
+              <div className="CompleteSectionButton">
+                <span
+                  className="deleteButton"
+                  onClick={() => deleteTodo(index, sectionTitle)}
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </div>
             )}
-            <span
-              role="img"
-              aria-label="Delete"
-              onClick={() => deleteTodo(index, sectionTitle)}
-            >
-              ❌ />
-            </span>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
