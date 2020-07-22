@@ -82,18 +82,21 @@ function TodoList({ sectionTitle, completeTodo, deletedTodo, sectionList }) {
           <span> {todo} </span>
           <div className="buttons">
             {sectionTitle === "completed" ? null : (
-              <span className="checkButton" onClick={() => completeTodo(index)}>
-                <img
-                  src="https://img.icons8.com/flat_round/25/000000/checkmark.png"
-                  alt="icon"
-                />
+              <span
+                role="img"
+                aria-label="Complete"
+                className="checkButton"
+                onClick={() => completeTodo(index)}
+              >
+                ✅
               </span>
             )}
-            <span onClick={() => deletedTodo(index, sectionTitle)}>
-              <img
-                src="https://img.icons8.com/flat_round/25/000000/delete-sign.png"
-                alt="icon"
-              />
+            <span
+              role="img"
+              aria-label="Delete"
+              onClick={() => deletedTodo(index, sectionTitle)}
+            >
+              ❌ />
             </span>
           </div>
         </div>
