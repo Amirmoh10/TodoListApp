@@ -44,18 +44,22 @@ function App() {
         onChange={(event) => settypedInTodo(event.target.value)}
         onKeyDown={onKeyDown}
       />
-      <div className="pendingSection">
-        <TodoList
-          sectionTitle="pending"
-          completeTodo={completeTodo}
-          deleteTodo={deleteTodo}
-          sectionList={pendingTodos}
-        />
-        <TodoList
-          sectionTitle="completed"
-          sectionList={completedTodos}
-          deleteTodo={deleteTodo}
-        />
+      <div className="sectionsContainer">
+        <div className="pendingSection">
+          <TodoList
+            sectionTitle="pending"
+            completeTodo={completeTodo}
+            deleteTodo={deleteTodo}
+            sectionList={pendingTodos}
+          />
+        </div>
+        <div className="CompleteSection">
+          <TodoList
+            sectionTitle="completed"
+            sectionList={completedTodos}
+            deleteTodo={deleteTodo}
+          />
+        </div>
       </div>
     </div>
   );
@@ -63,7 +67,7 @@ function App() {
 
 function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
   return (
-    <div className="sectionContainer">
+    <>
       <h2
         className={
           sectionList.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
@@ -105,7 +109,7 @@ function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 
