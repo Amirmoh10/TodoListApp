@@ -19,7 +19,6 @@ body {
   min-height: 600px;
   margin: 5em auto;
   border-radius: 1.4em;
-  overflow: scroll;
   background: #007991;
   background: -webkit-linear-gradient(
     to right,
@@ -35,7 +34,7 @@ body {
 
 .title {
   text-align: center;
-  font-size: 45px;
+  font-size: 6em;
   padding-bottom: 21px;
   font-family: "Orbitron", sans-serif;
   letter-spacing: 10px;
