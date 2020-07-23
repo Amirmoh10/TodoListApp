@@ -1,6 +1,51 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import "./App.css";
+
+const useStyles = makeStyles({
+  backgroundStyle: {
+    backgroundImage: "url(src/todoBackground.jpg)",
+    backgroundSize: "cover",
+    backgroundPosition: "top",
+    backgroundRepeat: "no-repeat",
+    
+  },
+
+  appStyle: {
+    background:
+      "linear-gradient(to right,rgba(120, 255, 215, 0.68), rgba(0, 121, 145, 0.68))",
+    width: "500px",
+    height: "720px",
+    margin: "3em auto",
+    borderRadius: "1.4em",
+  },
+  appTitleStyle: {
+    marginTop: "25px",
+    textAlign: "center",
+    fontSize: "6em",
+    fontFamily: "Orbitron",
+    letterSpacing: "10px",
+    color: "white",
+  },
+
+  inputStyle: {
+    padding: "2% 0 2% 2%",
+    borderStyle: "none",
+    borderRadius: "1em",
+    fontSize: "16px",
+    fontFamily: "Orbitron",
+    outline: "none",
+    backgroundColor: "white",
+    color: "#007991",
+    letterSpacing: "3px",
+    width: "70%",
+    margin: "1em 3em",
+  },
+});
 
 const sectionTypeTitle = {
   completed: "Completed",
@@ -34,34 +79,43 @@ function App() {
     }
   }
 
+  const classes = useStyles();
+
   return (
-    <div className="app">
-      <h1 className="title"> Todo </h1>
-      <input
-        type="text"
-        placeholder="Add todo..."
-        value={typedInTodo}
-        onChange={(event) => settypedInTodo(event.target.value)}
-        onKeyDown={onKeyDown}
-      />
-      <div className="sectionsContainer">
-        <div className="pendingSection">
-          <TodoList
-            sectionTitle="pending"
-            completeTodo={completeTodo}
-            deleteTodo={deleteTodo}
-            sectionList={pendingTodos}
+    <Grid container direction="column" className={classes.backgroundStyle}>
+      <Grid item container className={classes.appStyle}>
+        <Grid item xs={2} />
+        <Grid item xs={8}>
+          <h1 className={classes.appTitleStyle}> Todo </h1>
+          <input
+            type="text"
+            placeholder="Add todo..."
+            value={typedInTodo}
+            onChange={(event) => settypedInTodo(event.target.value)}
+            onKeyDown={onKeyDown}
+            className={classes.inputStyle}
           />
-        </div>
-        <div className="completeSection">
-          <TodoList
-            sectionTitle="completed"
-            sectionList={completedTodos}
-            deleteTodo={deleteTodo}
-          />
-        </div>
-      </div>
-    </div>
+          <div className="sectionsContainer">
+            <div className="pendingSection">
+              <TodoList
+                sectionTitle="pending"
+                completeTodo={completeTodo}
+                deleteTodo={deleteTodo}
+                sectionList={pendingTodos}
+              />
+            </div>
+            <div className="completeSection">
+              <TodoList
+                sectionTitle="completed"
+                sectionList={completedTodos}
+                deleteTodo={deleteTodo}
+              />
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={2} />
+      </Grid>
+    </Grid>
   );
 }
 
@@ -83,27 +137,16 @@ function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
             <span> {todo} </span>
             {sectionTitle === "pending" ? (
               <div className="pendingSectionButtons">
-                <span
-                  className="completeButton"
-                  onClick={() => completeTodo(index)}
-                >
-                  <i class="fas fa-check"></i>
-                </span>
-                <span
-                  className="deleteButton"
+                <CheckCircleOutlineIcon onClick={() => completeTodo(index)} />
+                <HighlightOffIcon
                   onClick={() => deleteTodo(index, sectionTitle)}
-                >
-                  <i class="fas fa-times"></i>
-                </span>
+                />
               </div>
             ) : (
               <div className="CompleteSectionButton">
-                <span
-                  className="deleteButton"
+                <HighlightOffIcon
                   onClick={() => deleteTodo(index, sectionTitle)}
-                >
-                  <i class="fas fa-times"></i>
-                </span>
+                />
               </div>
             )}
           </div>
