@@ -12,7 +12,6 @@ const useStyles = makeStyles({
     backgroundSize: "cover",
     backgroundPosition: "top",
     backgroundRepeat: "no-repeat",
-    
   },
 
   appStyle: {
@@ -24,8 +23,8 @@ const useStyles = makeStyles({
     borderRadius: "1.4em",
   },
   appTitleStyle: {
+    width: "100%",
     marginTop: "25px",
-    textAlign: "center",
     fontSize: "6em",
     fontFamily: "Orbitron",
     letterSpacing: "10px",
@@ -42,8 +41,8 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     color: "#007991",
     letterSpacing: "3px",
-    width: "70%",
-    margin: "1em 3em",
+    width: "100%",
+    marginTop: "1em",
   },
 });
 
@@ -82,8 +81,8 @@ function App() {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" className={classes.backgroundStyle}>
-      <Grid item container className={classes.appStyle}>
+    <Grid container direction="column">
+      <Grid item container dirction="column" xs={12} className={classes.appStyle}   justify="center">
         <Grid item xs={2} />
         <Grid item xs={8}>
           <h1 className={classes.appTitleStyle}> Todo </h1>
