@@ -7,29 +7,68 @@
 html {
   height: 100%;
 }
-  /* body {
+
+body {
   background-image: url(./todoBackground.jpg);
   background-size: cover;
   background-position: top;
   background-repeat: no-repeat;
-} */
-::-webkit-scrollbar {
-  width: 5px;
 }
 
-/* Track */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
 ::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgba(120, 255, 215, 0.301);
   border-radius: 10px;
 }
 
-/* Handle on hover */
+::-webkit-scrollbar-corner {
+  background-color: rgba(120, 255, 215, 0.301);
+}
 
+.app {
+  background: linear-gradient(
+    to right,
+    rgba(120, 255, 215, 0.68),
+    rgba(0, 121, 145, 0.68)
+  );
+  width: 500px;
+  height: 720px;
+  margin: 3em auto;
+  border-radius: 1.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app h1 {
+  font-size: 6em;
+  font-family: Orbitron;
+  letter-spacing: 10px;
+  color: white;
+}
+
+input {
+  padding: 2% 0 2% 2%;
+  border-style: none;
+  border-radius: 1em;
+  font-size: 16px;
+  font-family: "Orbitron";
+  outline: none;
+  background-color: white;
+  color: #007991;
+  letter-spacing: 3px;
+  width: 60%;
+  margin-top: 1em;
+}
 
 ::placeholder {
   color: #007991;
@@ -38,12 +77,14 @@ html {
 }
 
 .sectionsContainer {
+  width: 60%;
   height: 430px;
   display: flex;
   flex-direction: column;
   margin: 5% auto 0 auto;
   overflow-y: scroll;
 }
+
 .pendingSection {
   height: 50%;
   text-align: start;
@@ -54,13 +95,12 @@ html {
   margin-bottom: 10%;
 }
 
-.completeSection{
+.completeSection {
   height: 50%;
   text-align: start;
   font-family: "Orbitron", sans-serif;
   font-size: 16px;
   letter-spacing: 2.5px;
-
 }
 
 .todoContainer {
@@ -103,4 +143,3 @@ html {
   display: flex;
   justify-content: flex-end;
 }
-
