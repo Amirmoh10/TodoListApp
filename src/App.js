@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
+
 import "./App.css";
 
 const sectionTypeTitle = {
@@ -11,6 +13,7 @@ function App() {
   const [typedInTodo, settypedInTodo] = useState("");
   const [pendingTodos, setpendingTodos] = useState([]);
   const [completedTodos, setcompletedTodos] = useState([]);
+  console.log(typedInTodo)
 
   function completeTodo(todoIndex) {
     const pendingTask = pendingTodos[todoIndex];
@@ -36,7 +39,8 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="title"> Todo </h1>
+      <h1 className="title">Todo</h1>
+
       <input
         type="text"
         placeholder="Add todo..."
@@ -44,72 +48,60 @@ function App() {
         onChange={(event) => settypedInTodo(event.target.value)}
         onKeyDown={onKeyDown}
       />
-      <div className="sectionsContainer">
-        <div className="pendingSection">
-          <TodoList
-            sectionTitle="pending"
-            completeTodo={completeTodo}
-            deleteTodo={deleteTodo}
-            sectionList={pendingTodos}
-          />
-        </div>
-        <div className="completeSection">
-          <TodoList
-            sectionTitle="completed"
-            sectionList={completedTodos}
-            deleteTodo={deleteTodo}
-          />
-        </div>
-      </div>
     </div>
+
+    // <div className="sectionsContainer">
+    //   <TodoList
+    //     sectionTitle="pending"
+    //     completeTodo={completeTodo}
+    //     deleteTodo={deleteTodo}
+    //     sectionList={pendingTodos}
+    //   />
+    //   <TodoList
+    //     sectionTitle="completed"
+    //     sectionList={completedTodos}
+    //     deleteTodo={deleteTodo}
+    //   />
+    // </div>
   );
 }
 
+export default App;
+
 function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
   return (
-    <>
+    <div className="todoContainer">
       <h2
         className={
           sectionList.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
         }
       >
-        {sectionTitle === "pending"
-          ? sectionTypeTitle.pending
-          : sectionTypeTitle.completed}
+        {sectionTypeTitle[sectionTitle]}
       </h2>
-      <div className="todoContainer">
+      <div>
         {sectionList.map((todo, index) => (
           <div className="todoItem" key={index}>
-            <span> {todo} </span>
-            {sectionTitle === "pending" ? (
-              <div className="pendingSectionButtons">
-                <span
-                  className="completeButton"
+            <span>{todo}</span>
+            <div className="buttonsSection">
+              {sectionTitle === "pending" && (
+                <button
+                  className="transparent completeButton"
                   onClick={() => completeTodo(index)}
                 >
-                  <i class="fas fa-check"></i>
-                </span>
-                <span
-                  className="deleteButton"
-                  onClick={() => deleteTodo(index, sectionTitle)}
-                >
-                  <i class="fas fa-times"></i>
-                </span>
-              </div>
-            ) : (
-              <div className="CompleteSectionButton">
-                <span
-                  className="deleteButton"
-                  onClick={() => deleteTodo(index, sectionTitle)}
-                >
-                  <i class="fas fa-times"></i>
-                </span>
-              </div>
-            )}
+                  <CheckOutlined className="icon" />
+                </button>
+              )}
+              <button
+                className="transparent deleteButton"
+                onClick={() => deleteTodo(index, sectionTitle)}
+              >
+                <CloseOutlined className="icon" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -119,5 +111,3 @@ TodoList.propTypes = {
   deleteTodo: PropTypes.func.isRequired,
   todos: PropTypes.arrayOf(PropTypes.string),
 };
-
-export default App;

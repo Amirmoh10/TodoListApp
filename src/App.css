@@ -9,103 +9,51 @@ html {
 }
 
 body {
-  background-image: url(./todoBackground.jpg);
-  background-size: cover;
-  background-position: top;
-  background-repeat: no-repeat;
+  background-color: #000;
+  color: #ffffff;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(120, 255, 215, 0.301);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: rgba(120, 255, 215, 0.301);
+body, input, button {
+  font-family: "Orbitron", sans-serif;
+  font-size: 24px;
 }
 
 .app {
-  background: linear-gradient(
-    to right,
-    rgba(120, 255, 215, 0.68),
-    rgba(0, 121, 145, 0.68)
-  );
-  width: 500px;
-  height: 720px;
-  margin: 3em auto;
+  background-color: #121212;
+  width: 100%;
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 32px;
   border-radius: 1.4em;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .app h1 {
-  font-size: 6em;
-  font-family: Orbitron;
+  font-size: 4em;
   letter-spacing: 10px;
-  color: white;
+  text-align: center;
+  padding-bottom: 32px;
 }
 
 input {
-  padding: 2% 0 2% 2%;
+  padding: 12px 24px;
   border-style: none;
   border-radius: 1em;
-  font-size: 16px;
-  font-family: "Orbitron";
   outline: none;
-  background-color: white;
-  color: #007991;
   letter-spacing: 3px;
-  width: 60%;
-  margin-top: 1em;
-}
-
-::placeholder {
-  color: #007991;
-  opacity: 0.7;
-  letter-spacing: 5px;
 }
 
 .sectionsContainer {
-  width: 60%;
-  height: 430px;
   display: flex;
   flex-direction: column;
-  margin: 5% auto 0 auto;
-  overflow-y: scroll;
+  padding-top: 64px;
 }
 
-.pendingSection {
-  height: 50%;
-  text-align: start;
-  font-family: "Orbitron", sans-serif;
-  font-size: 16px;
+h2 {
   letter-spacing: 2.5px;
-  padding: 0 1% 5% 0;
-  margin-bottom: 10%;
-}
-
-.completeSection {
-  height: 50%;
-  text-align: start;
-  font-family: "Orbitron", sans-serif;
-  font-size: 16px;
-  letter-spacing: 2.5px;
-}
-
-.todoContainer {
-  overflow-y: scroll;
-  max-height: 100%;
+  padding-bottom: 16px;
 }
 
 .dimmedSectiontTitle {
@@ -114,32 +62,39 @@ input {
 }
 
 .boldSectionTitle {
-  border-bottom: 1px solid white;
-  padding-bottom: 2%;
   color: white;
 }
 
+.todoContainer:first-child {
+  padding-bottom: 64px;
+}
+
 .todoItem {
-  font-size: 18px;
-  font-family: "Orbitron", sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 0;
+  padding: 16px 0;
   border-bottom: 1px solid white;
-  color: #007991;
 }
 
-.pendingSectionButtons {
-  width: 63px;
-  height: 30px;
-  display: flex;
-  justify-content: space-around;
+.todoItem, .todoItem button {
+  color: rgb(72, 172, 152);
 }
 
-.CompleteSectionButton {
-  width: 63px;
-  height: 30px;
-  display: flex;
-  justify-content: flex-end;
+button.transparent {
+  background: transparent;
+  border: none;
+  margin: 0;
+  outline: none;
+}
+
+.buttonsSection button:first-child:not(:last-child) {
+  margin-right: 16px;
+}
+
+
+@media screen and (max-width: 400px) {
+  body, input, button {
+    font-size: 18px;
+  }
 }
