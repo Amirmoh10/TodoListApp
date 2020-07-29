@@ -49,41 +49,27 @@ function App() {
         onKeyDown={onKeyDown}
       />
     </div>
-
-    // <div className="sectionsContainer">
-    //   <TodoList
-    //     sectionTitle="pending"
-    //     completeTodo={completeTodo}
-    //     deleteTodo={deleteTodo}
-    //     sectionList={pendingTodos}
-    //   />
-    //   <TodoList
-    //     sectionTitle="completed"
-    //     sectionList={completedTodos}
-    //     deleteTodo={deleteTodo}
-    //   />
-    // </div>
   );
 }
 
 export default App;
 
-function TodoList({ sectionTitle, completeTodo, deleteTodo, sectionList }) {
+function TodoList({ sectionTitle, completeTodo, deleteTodo, todoList }) {
   return (
     <div className="todoContainer">
       <h2
         className={
-          sectionList.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
+          todoList.length > 0 ? "boldSectionTitle" : "dimmedSectiontTitle"
         }
       >
         {sectionTypeTitle[sectionTitle]}
       </h2>
       <div>
-        {sectionList.map((todo, index) => (
+        {todoList.map((todo, index) => (
           <div className="todoItem" key={index}>
             <span>{todo}</span>
             <div className="buttonsSection">
-              {sectionTitle === "pending" && (
+              {sectionTitle !== "pending" ? null : (
                 <button
                   className="transparent completeButton"
                   onClick={() => completeTodo(index)}
