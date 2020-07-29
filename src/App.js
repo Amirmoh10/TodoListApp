@@ -10,10 +10,9 @@ const sectionTypeTitle = {
 };
 
 function App() {
-  const [typedInTodo, settypedInTodo] = useState("");
-  const [pendingTodos, setpendingTodos] = useState([]);
+  const [typedInTodo, setTypedInTodo] = useState("");
+  const [pendingTodos, setPendingTodos] = useState([]);
   const [completedTodos, setcompletedTodos] = useState([]);
-  console.log(typedInTodo)
 
   function completeTodo(todoIndex) {
     const pendingTask = pendingTodos[todoIndex];
@@ -25,44 +24,42 @@ function App() {
     const targetList =
       todoSection === "pending" ? pendingTodos : completedTodos;
     const setter =
-      targetList === pendingTodos ? setpendingTodos : setcompletedTodos;
+      targetList === pendingTodos ? setPendingTodos : setcompletedTodos;
     const filteredTodos = targetList.filter((_, index) => todoIndex !== index);
     setter(filteredTodos);
   }
 
   function onKeyDown(e) {
     if (e.key === "Enter" && typedInTodo.trim()) {
-      setpendingTodos([...pendingTodos, typedInTodo]);
-      settypedInTodo("");
+      setPendingTodos([...pendingTodos, typedInTodo]);
+      setTypedInTodo("");
     }
   }
 
   return (
     <div className="app">
       <h1 className="title">Todo</h1>
-
       <input
         type="text"
         placeholder="Add todo..."
         value={typedInTodo}
-        onChange={(event) => settypedInTodo(event.target.value)}
+        onChange={(event) => setTypedInTodo(event.target.value)}
         onKeyDown={onKeyDown}
       />
+      <div className="sectionsContainer">
+        <TodoList
+          sectionTitle="pending"
+          completeTodo={completeTodo}
+          deleteTodo={deleteTodo}
+          sectionList={pendingTodos}
+        />
+        <TodoList
+          sectionTitle="completed"
+          sectionList={completedTodos}
+          deleteTodo={deleteTodo}
+        />
+      </div>
     </div>
-
-    // <div className="sectionsContainer">
-    //   <TodoList
-    //     sectionTitle="pending"
-    //     completeTodo={completeTodo}
-    //     deleteTodo={deleteTodo}
-    //     sectionList={pendingTodos}
-    //   />
-    //   <TodoList
-    //     sectionTitle="completed"
-    //     sectionList={completedTodos}
-    //     deleteTodo={deleteTodo}
-    //   />
-    // </div>
   );
 }
 
