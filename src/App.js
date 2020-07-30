@@ -51,11 +51,11 @@ function App() {
           sectionTitle="pending"
           completeTodo={completeTodo}
           deleteTodo={deleteTodo}
-          sectionList={pendingTodos}
+          todoList={pendingTodos}
         />
         <TodoList
           sectionTitle="completed"
-          sectionList={completedTodos}
+          todoList={completedTodos}
           deleteTodo={deleteTodo}
         />
       </div>
@@ -80,7 +80,7 @@ function TodoList({ sectionTitle, completeTodo, deleteTodo, todoList }) {
           <div className="todoItem" key={index}>
             <span>{todo}</span>
             <div className="buttonsSection">
-              {sectionTitle !== "pending" ? null : (
+              {sectionTitle === "pending" && (
                 <button
                   className="transparent completeButton"
                   onClick={() => completeTodo(index)}
@@ -106,5 +106,5 @@ TodoList.propTypes = {
   sectionTitle: PropTypes.oneOf(["pending", "completed"]).isRequired,
   completeTodo: PropTypes.func,
   deleteTodo: PropTypes.func.isRequired,
-  todos: PropTypes.arrayOf(PropTypes.string),
+  todoList: PropTypes.arrayOf(PropTypes.string),
 };
